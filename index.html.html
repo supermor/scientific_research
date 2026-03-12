@@ -1,0 +1,493 @@
+import React, { useState } from 'react';
+import { 
+  FlaskConical, 
+  Lightbulb, 
+  Search, 
+  CheckCircle2, 
+  FileEdit, 
+  Video, 
+  BookOpen, 
+  HelpCircle, 
+  MessageCircle,
+  Award,
+  Printer
+} from 'lucide-react';
+
+const ScientificInquiryApp = () => {
+  const [activeTab, setActiveTab] = useState('home');
+
+  // Navigation Tabs
+  const tabs = [
+    { id: 'home', label: 'ראשי', icon: <Search size={20} /> },
+    { id: 'steps', label: 'שלבי החקר', icon: <BookOpen size={20} /> },
+    { id: 'practice', label: 'תרגול רמות', icon: <CheckCircle2 size={20} /> },
+    { id: 'task', label: 'משימה ודוח', icon: <FlaskConical size={20} /> },
+    { id: 'quiz', label: 'חידון', icon: <HelpCircle size={20} /> },
+    { id: 'reflection', label: 'רפלקציה', icon: <MessageCircle size={20} /> }
+  ];
+
+  return (
+    <div dir="rtl" className="min-h-screen bg-blue-50 text-slate-800 font-sans print:bg-white">
+      
+      {/* Header - Hidden when printing */}
+      <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg print:hidden">
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center gap-3">
+              <FlaskConical size={36} className="text-yellow-300" />
+              <h1 className="text-3xl font-bold">המעבדה שלי: חקר מדעי</h1>
+            </div>
+            <p className="text-blue-100 text-lg">לומדים, חוקרים ומגלים - לתלמידים ולתלמידות כיתה ו'</p>
+          </div>
+          
+          {/* Navigation */}
+          <nav className="mt-6 flex flex-wrap justify-center md:justify-start gap-2">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold transition-colors duration-200 ${
+                  activeTab === tab.id 
+                    ? 'bg-yellow-400 text-indigo-900 shadow-md' 
+                    : 'bg-white/20 hover:bg-white/30 text-white'
+                }`}
+              >
+                {tab.icon}
+                {tab.label}
+              </button>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <main className="max-w-6xl mx-auto px-4 py-8">
+        {activeTab === 'home' && <Home />}
+        {activeTab === 'steps' && <StepsOfInquiry />}
+        {activeTab === 'practice' && <Practice />}
+        {activeTab === 'task' && <ExperimentTask />}
+        {activeTab === 'quiz' && <Quiz />}
+        {activeTab === 'reflection' && <Reflection />}
+      </main>
+
+      {/* Footer - Hidden when printing */}
+      <footer className="bg-slate-800 text-slate-300 text-center py-6 mt-12 print:hidden">
+        <p>פותח באהבה עבור חוקרים וחוקרות צעירים בכיתה ו' 🔬</p>
+      </footer>
+    </div>
+  );
+};
+
+// --- Components ---
+
+const Home = () => (
+  <div className="space-y-8 animate-in fade-in duration-500">
+    <div className="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-400">
+      <h2 className="text-3xl font-bold text-indigo-700 mb-4">ברוכים הבאים והבאות לעולם החקר!</h2>
+      <p className="text-lg leading-relaxed mb-6 text-slate-600">
+        המדע נמצא בכל מקום סביבנו! כל המצאה גדולה התחילה משאלה קטנה. 
+        באתר זה נלמד כיצד מדענים ומדעניות חוקרים את העולם, נכיר את שלבי החקר המדעי, ונתנסה בעצמנו בתכנון וביצוע של ניסויים.
+      </p>
+      
+      <div className="bg-indigo-50 rounded-xl p-6 border border-indigo-100 flex flex-col md:flex-row items-center gap-6">
+        <div className="bg-indigo-600 p-4 rounded-full text-white">
+          <Video size={32} />
+        </div>
+        <div className="flex-1">
+          <h3 className="text-xl font-bold text-indigo-800 mb-2">רוצים לדעת עוד לפני שמתחילים?</h3>
+          <p className="mb-4 text-slate-600">צפו בסרטון של בריינפופ שמסביר בצורה מהנה על שיטות החקר המדעי.</p>
+          <a 
+            href="https://www.brainpop.co.il/category_8/subcategory_720/subjects_4925/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+          >
+            <Video size={20} />
+            לצפייה בסרטון בבריינפופ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {/* Example: The Pine Needle Mystery */}
+    <div className="bg-emerald-50 rounded-2xl shadow-lg p-8 border-r-4 border-emerald-500">
+      <h3 className="text-2xl font-bold text-emerald-800 mb-4 flex items-center gap-2">
+        <Lightbulb className="text-emerald-600" /> דוגמה לחקר: תעלומה בחורשת האורנים
+      </h3>
+      <p className="mb-4">
+        תלמידים ותלמידות שמו לב שבחורשות של אורנים לא גדלים צמחים אחרים, והקרקע מכוסה במחטי אורן.
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <div className="bg-white p-4 rounded-lg shadow-sm">
+          <strong className="text-emerald-700">שאלת החקר:</strong> מה הקשר בין הימצאות מחטי אורן לבין הצלחת הנביטה של זרעים?
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-sm">
+          <strong className="text-emerald-700">השערה:</strong> מחטי האורן יפחיתו את אחוז הנביטה של הזרעים (מבוסס על תופעה הנקראת אללופתיה).
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-sm">
+          <strong className="text-emerald-700">תוצאות הניסוי:</strong> בצלחת עם המחטים נבטו 2 זרעים, בצלחת בלי המחטים נבטו 9 זרעים.
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow-sm">
+          <strong className="text-emerald-700">מסקנה:</strong> מחטי האורן מעכבות נביטה! ולכן האדמה תחת האורן חשופה.
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const StepsOfInquiry = () => {
+  const steps = [
+    { num: 1, title: 'מבוא ותופעה', desc: 'הצגת התופעה שראינו, רקע עיוני (מידע מקדים) והסיבה שבגללה בחרנו לחקור את הנושא.' },
+    { num: 2, title: 'שאלת החקר', desc: 'שאלה הקושרת בין שני גורמים: הגורם המשפיע (בלתי תלוי) והגורם המושפע (התלוי). למשל: "כיצד משפיע [משפיע] על [מושפע]?"' },
+    { num: 3, title: 'השערה', desc: 'התשובה האפשרית שאנו חושבים שתהיה לשאלה, מבוססת על ידע מדעי. כוללת את שני הגורמים. כיווניות (למשל: "ככל ש... כך...").' },
+    { num: 4, title: 'תכנון הניסוי (מערך המחקר)', desc: 'רשימת כלים וחומרים, איך נשנה את הגורם המשפיע, איך נמדוד את המושפע. שמירה על גורמים קבועים כדי שהניסוי יהיה הוגן, ושימוש בבקרות וחזרות.' },
+    { num: 5, title: 'תוצאות', desc: 'ביצוע הניסוי! איסוף הנתונים, רישום בטבלאות והצגה בגרפים ברורים עם יחידות מידה.' },
+    { num: 6, title: 'מסקנות ודיון', desc: 'מה למדנו מהתוצאות? האם ההשערה שלנו אוששה (נמצאה נכונה) או הופרכה? הסבר מדעי למה שקרה.' }
+  ];
+
+  return (
+    <div className="space-y-6 animate-in fade-in duration-500">
+      <h2 className="text-3xl font-bold text-indigo-800 mb-6 text-center">שלבי החקר המדעי</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {steps.map((step) => (
+          <div key={step.num} className="bg-white rounded-xl shadow-md p-6 relative overflow-hidden group hover:shadow-xl transition-shadow">
+            <div className="absolute -right-4 -top-4 w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center text-2xl font-bold text-yellow-800 group-hover:scale-110 transition-transform">
+              {step.num}
+            </div>
+            <h3 className="text-xl font-bold text-indigo-700 mt-4 mb-3">{step.title}</h3>
+            <p className="text-slate-600 leading-relaxed">{step.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Practice = () => {
+  const [level, setLevel] = useState(1);
+  const [answers, setAnswers] = useState({});
+  const [showResults, setShowResults] = useState(false);
+
+  // רמה 1: זיהוי גורם משפיע ומושפע
+  const questionsLevel1 = [
+    { id: 'q1', text: 'כיצד משפיעה כמות מי ההשקיה על גודל העגבניות?', options: [{ label: 'כמות מי ההשקיה', type: 'משפיע' }, { label: 'גודל העגבניות', type: 'מושפע' }] },
+    { id: 'q2', text: 'מה הקשר בין מידת המאמץ בפעילות גופנית לבין קצב הנשימה?', options: [{ label: 'מידת המאמץ', type: 'משפיע' }, { label: 'קצב הנשימה', type: 'מושפע' }] },
+    { id: 'q3', text: 'מהי ההשפעה של טמפרטורת המים על מהירות הסרת הכתמים?', options: [{ label: 'טמפרטורת המים', type: 'משפיע' }, { label: 'מהירות הסרת הכתמים', type: 'מושפע' }] }
+  ];
+
+  // רמה 2: ניסוח שאלות חקר
+  const questionsLevel2 = [
+    { 
+      id: 'q4', 
+      text: 'חוקרת רצתה לבדוק אם סוג הסבון עוזר להוריד כתמי שוקולד מבד. איזו שאלת חקר היא המדויקת ביותר?',
+      options: [
+        { label: 'האם סבון כלים טוב יותר מכביסה?', correct: false },
+        { label: 'מה הקשר בין סוג הסבון לבין מידת הסרת כתם השוקולד מהבד?', correct: true },
+        { label: 'איך כתמים יורדים מהר?', correct: false }
+      ]
+    }
+  ];
+
+  const handleSelect = (qId, optionType) => {
+    setAnswers(prev => ({ ...prev, [qId]: optionType }));
+  };
+
+  const checkResults = () => setShowResults(true);
+
+  return (
+    <div className="bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto animate-in fade-in duration-500">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 border-b pb-4">
+        <h2 className="text-3xl font-bold text-indigo-800">זמן תרגול!</h2>
+        <div className="flex gap-2 mt-4 md:mt-0">
+          <button onClick={() => { setLevel(1); setShowResults(false); setAnswers({}); }} className={`px-4 py-2 rounded-lg font-bold ${level === 1 ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-700'}`}>רמה 1: זיהוי</button>
+          <button onClick={() => { setLevel(2); setShowResults(false); setAnswers({}); }} className={`px-4 py-2 rounded-lg font-bold ${level === 2 ? 'bg-indigo-600 text-white' : 'bg-slate-200 text-slate-700'}`}>רמה 2: ניסוח</button>
+        </div>
+      </div>
+
+      {level === 1 && (
+        <div className="space-y-8">
+          <p className="text-lg mb-4">קראו את שאלות החקר הבאות, וסמנו עבור כל מודגש האם הוא <strong>הגורם המשפיע (הבלתי תלוי)</strong> או <strong>הגורם המושפע (התלוי)</strong>.</p>
+          {questionsLevel1.map((q, idx) => (
+            <div key={q.id} className="bg-blue-50 p-6 rounded-xl">
+              <h3 className="font-bold text-lg mb-4">{idx + 1}. {q.text}</h3>
+              <div className="flex flex-col gap-4">
+                {q.options.map(opt => (
+                  <div key={opt.label} className="flex items-center gap-4">
+                    <span className="w-48 font-medium bg-white p-2 rounded border border-blue-200 text-center">{opt.label}</span>
+                    <select 
+                      onChange={(e) => handleSelect(`${q.id}_${opt.label}`, e.target.value)}
+                      className="p-2 border rounded-lg flex-1 md:flex-none md:w-48"
+                      disabled={showResults}
+                    >
+                      <option value="">בחר/י...</option>
+                      <option value="משפיע">הגורם המשפיע</option>
+                      <option value="מושפע">הגורם המושפע</option>
+                    </select>
+                    {showResults && answers[`${q.id}_${opt.label}`] === opt.type && <CheckCircle2 className="text-green-500" />}
+                    {showResults && answers[`${q.id}_${opt.label}`] !== opt.type && <span className="text-red-500 font-bold">התשובה הנכונה: {opt.type}</span>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {level === 2 && (
+        <div className="space-y-8">
+          <p className="text-lg mb-4">בחרו את שאלת החקר המנוסחת בצורה המדעית והמדויקת ביותר.</p>
+          {questionsLevel2.map((q, idx) => (
+            <div key={q.id} className="bg-purple-50 p-6 rounded-xl">
+              <h3 className="font-bold text-lg mb-4">{idx + 1}. {q.text}</h3>
+              <div className="flex flex-col gap-3">
+                {q.options.map((opt, oIdx) => (
+                  <label key={oIdx} className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${answers[q.id] === opt.label ? 'bg-purple-200 border-purple-400' : 'bg-white border-purple-200'}`}>
+                    <input 
+                      type="radio" 
+                      name={q.id} 
+                      value={opt.label}
+                      onChange={() => handleSelect(q.id, opt.label)}
+                      disabled={showResults}
+                      className="w-5 h-5 text-purple-600"
+                    />
+                    <span className="text-lg">{opt.label}</span>
+                    {showResults && opt.correct && <CheckCircle2 className="text-green-500 mr-auto" />}
+                    {showResults && answers[q.id] === opt.label && !opt.correct && <span className="text-red-500 mr-auto font-bold">לא מדויק</span>}
+                  </label>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {!showResults ? (
+        <button onClick={checkResults} className="mt-8 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition-transform hover:scale-105">
+          בדוק תשובות
+        </button>
+      ) : (
+        <button onClick={() => { setShowResults(false); setAnswers({}); }} className="mt-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg">
+          נסה שוב
+        </button>
+      )}
+    </div>
+  );
+};
+
+const ExperimentTask = () => {
+  const handlePrint = (e) => {
+    e.preventDefault();
+    window.print();
+  };
+
+  return (
+    <div className="space-y-8 animate-in fade-in duration-500">
+      
+      {/* Ideas Section - Hidden on print */}
+      <div className="bg-yellow-50 rounded-2xl shadow-lg p-8 border-r-4 border-yellow-400 print:hidden">
+        <h2 className="text-2xl font-bold text-yellow-800 mb-4">רעיונות למשימת חקר בבית 🏠</h2>
+        <p className="mb-4">כדי למלא את הדוח, עליכם לבחור נושא ולבצע ניסוי קטן בבית בעזרת ההורים. הנה כמה רעיונות (אתם יכולים להמציא משלכם!):</p>
+        <ul className="list-disc list-inside space-y-2 text-slate-700">
+          <li><strong>כביסה מדעית:</strong> מה הקשר בין טמפרטורת המים לבין הסרת כתמי קטשופ מבגד?</li>
+          <li><strong>תפוחים טריים:</strong> השפעת מיץ לימון על קצב השחמת תפוח עץ חתוך.</li>
+          <li><strong>שמירה על הירק:</strong> השפעת עטיפת מלפפון בנייר אלומיניום על אורך חייו במקרר.</li>
+          <li><strong>מים לצמחים:</strong> מה הקשר בין סוג הנוזל (מים, מים עם מלח, מיץ) לבין קצב הצמיחה של שעועית?</li>
+        </ul>
+      </div>
+
+      {/* Lab Report Form */}
+      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto print:shadow-none print:p-0 print:w-full">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-3xl font-bold text-indigo-800 flex items-center gap-2">
+            <FileEdit /> דוח ניסוי במדעים
+          </h2>
+          <button onClick={handlePrint} className="flex items-center gap-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-800 px-4 py-2 rounded-lg font-bold print:hidden">
+            <Printer size={20} /> הדפס/שמור כ-PDF
+          </button>
+        </div>
+        
+        <form className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block font-bold text-slate-700 mb-2">שמות התלמידים והתלמידות:</label>
+              <input type="text" className="w-full border-b-2 border-slate-300 bg-slate-50 p-2 focus:outline-none focus:border-indigo-500" placeholder="לדוגמה: רוני ודניאל" />
+            </div>
+            <div>
+              <label className="block font-bold text-slate-700 mb-2">נושא הניסוי:</label>
+              <input type="text" className="w-full border-b-2 border-slate-300 bg-slate-50 p-2 focus:outline-none focus:border-indigo-500" placeholder="לדוגמה: הסרת כתמים" />
+            </div>
+          </div>
+
+          <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+            <label className="block font-bold text-blue-900 mb-2">1. שאלת חקר:</label>
+            <p className="text-sm text-blue-700 mb-2">מה הקשר בין [גורם משפיע] לבין [גורם מושפע]?</p>
+            <input type="text" className="w-full border p-3 rounded-lg bg-white" placeholder="הקלידו את שאלת החקר..." />
+          </div>
+
+          <div className="bg-purple-50 p-4 rounded-xl border border-purple-100">
+            <label className="block font-bold text-purple-900 mb-2">2. מטרת הניסוי:</label>
+            <p className="text-sm text-purple-700 mb-2">מה תרצו לבדוק בניסוי זה?</p>
+            <input type="text" className="w-full border p-3 rounded-lg bg-white" placeholder="מטרת הניסוי היא לבדוק..." />
+          </div>
+
+          <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+            <label className="block font-bold text-emerald-900 mb-2">3. השערה:</label>
+            <p className="text-sm text-emerald-700 mb-2">מה צפוי לדעתכם.ן להתרחש בסוף הניסוי? (כולל נימוק מדעי קצר)</p>
+            <textarea className="w-full border p-3 rounded-lg bg-white h-24" placeholder="אנו משערים ש... בגלל ש..."></textarea>
+          </div>
+
+          <div className="bg-orange-50 p-4 rounded-xl border border-orange-100">
+            <label className="block font-bold text-orange-900 mb-2">4. תכנון הניסוי וציוד:</label>
+            <p className="text-sm text-orange-700 mb-2">אילו חומרים וכלים תצטרכו?</p>
+            <textarea className="w-full border p-3 rounded-lg bg-white h-24" placeholder="רשימת הציוד: 3 כוסות, מים, מלח..."></textarea>
+          </div>
+
+          <div className="bg-red-50 p-4 rounded-xl border border-red-100">
+            <label className="block font-bold text-red-900 mb-2">5. מהלך הניסוי:</label>
+            <p className="text-sm text-red-700 mb-2">מה עשיתם.ן בניסוי? (כתבו בשלבים מסודרים: 1, 2, 3...)</p>
+            <textarea className="w-full border p-3 rounded-lg bg-white h-32" placeholder="שלב 1: לקחנו... שלב 2: הוספנו..."></textarea>
+          </div>
+
+          <div className="bg-teal-50 p-4 rounded-xl border border-teal-100">
+            <label className="block font-bold text-teal-900 mb-2">6. תוצאות:</label>
+            <p className="text-sm text-teal-700 mb-2">מה קרה לאחר ביצוע הניסוי? (מה ראיתם, מדדתם?)</p>
+            <textarea className="w-full border p-3 rounded-lg bg-white h-24" placeholder="בכוס הראשונה ראינו ש... בכוס השנייה..."></textarea>
+          </div>
+
+          <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+            <label className="block font-bold text-indigo-900 mb-2">7. מסקנות:</label>
+            <p className="text-sm text-indigo-700 mb-2">מה למדתם מהתוצאות? האם ההשערה שלכם הייתה נכונה?</p>
+            <textarea className="w-full border p-3 rounded-lg bg-white h-24" placeholder="מסקנתנו היא ש... ההשערה שלנו הייתה..."></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const Quiz = () => {
+  const [currentQ, setCurrentQ] = useState(0);
+  const [score, setScore] = useState(0);
+  const [showResult, setShowResult] = useState(false);
+
+  const questions = [
+    {
+      question: "איזה שלב מגיע מיד אחרי ניסוח 'שאלת החקר'?",
+      options: ["מסקנות", "השערה", "תוצאות", "תכנון ציוד"],
+      correct: 1
+    },
+    {
+      question: "חוקר משנה את כמות הדשן לצמחים ובודק את מספר העלים שצמחו. מהו הגורם המשפיע (הבלתי תלוי)?",
+      options: ["מספר העלים", "סוג הצמח", "כמות הדשן", "השמש"],
+      correct: 2
+    },
+    {
+      question: "כדי שניסוי יהיה הוגן (אמין), צריך לשמור על גורמים מסוימים...",
+      options: ["משתנים כל הזמן", "קבועים", "לא ידועים", "שונים מניסוי לניסוי"],
+      correct: 1
+    },
+    {
+      question: "מה מטרת המסקנה בדוח הניסוי?",
+      options: ["לפרט את רשימת הציוד", "לנחש מה יקרה", "לתת תשובה לשאלת החקר ולבדוק את ההשערה", "לצייר גרף יפה"],
+      correct: 2
+    }
+  ];
+
+  const handleAnswer = (index) => {
+    if (index === questions[currentQ].correct) {
+      setScore(score + 1);
+    }
+    
+    if (currentQ < questions.length - 1) {
+      setCurrentQ(currentQ + 1);
+    } else {
+      setShowResult(true);
+    }
+  };
+
+  const restart = () => {
+    setCurrentQ(0);
+    setScore(0);
+    setShowResult(false);
+  };
+
+  return (
+    <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto text-center animate-in zoom-in duration-500">
+      {!showResult ? (
+        <>
+          <h2 className="text-2xl font-bold text-indigo-800 mb-2">חידון חוקרים צעירים</h2>
+          <p className="text-slate-500 mb-8">שאלה {currentQ + 1} מתוך {questions.length}</p>
+          
+          <div className="bg-indigo-50 p-6 rounded-xl mb-8">
+            <h3 className="text-xl font-bold text-indigo-900">{questions[currentQ].question}</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {questions[currentQ].options.map((opt, idx) => (
+              <button 
+                key={idx}
+                onClick={() => handleAnswer(idx)}
+                className="bg-white border-2 border-indigo-200 hover:border-indigo-500 hover:bg-indigo-50 text-indigo-800 font-bold py-4 px-6 rounded-xl transition-all shadow-sm"
+              >
+                {opt}
+              </button>
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="space-y-6">
+          <Award size={64} className={`mx-auto ${score >= 3 ? 'text-yellow-400' : 'text-slate-400'}`} />
+          <h2 className="text-3xl font-bold">סיימתם את החידון!</h2>
+          <p className="text-xl">עניתם נכונה על <strong className="text-indigo-600">{score}</strong> מתוך {questions.length} שאלות.</p>
+          
+          {score === questions.length ? (
+            <p className="text-green-600 font-bold text-lg">כל הכבוד! אתם חוקרים מדענים של ממש!</p>
+          ) : (
+            <p className="text-orange-500 font-bold text-lg">יפה מאוד! תמיד אפשר לחזור לשלבי החקר וללמוד עוד.</p>
+          )}
+
+          <button onClick={restart} className="mt-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition-transform hover:scale-105">
+            נסו שוב
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const Reflection = () => {
+  return (
+    <div className="bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto animate-in fade-in duration-500">
+      <h2 className="text-3xl font-bold text-indigo-800 mb-6 flex items-center gap-2">
+        <MessageCircle className="text-indigo-500" /> רפלקציה: במבט לאחור
+      </h2>
+      <p className="text-lg text-slate-600 mb-8">
+        חלק חשוב בתהליך הלמידה של כל חוקר וחוקרת הוא לעצור ולחשוב על הדרך שעברנו. 
+        כתבו עבור עצמכם או עבור המורה את מחשבותיכם:
+      </p>
+
+      <form className="space-y-6">
+        <div>
+          <label className="block font-bold text-slate-800 mb-2">1. מה הדבר הכי מעניין או מפתיע שלמדתי בתהליך החקר?</label>
+          <textarea className="w-full border-2 border-slate-200 p-3 rounded-lg focus:outline-none focus:border-indigo-500 transition-colors h-24" placeholder="שתפו אותנו..."></textarea>
+        </div>
+        
+        <div>
+          <label className="block font-bold text-slate-800 mb-2">2. באיזה שלב בניסוי נתקלתי בקושי (בתכנון? בביצוע?) וכיצד התמודדתי איתו?</label>
+          <textarea className="w-full border-2 border-slate-200 p-3 rounded-lg focus:outline-none focus:border-indigo-500 transition-colors h-24" placeholder="הקושי שלי היה... והתמודדתי איתו כך..."></textarea>
+        </div>
+
+        <div>
+          <label className="block font-bold text-slate-800 mb-2">3. אם הייתי מבצע.ת את הניסוי שוב, מה הייתי עושה אחרת או איזה גורם נוסף הייתי בודק.ת?</label>
+          <textarea className="w-full border-2 border-slate-200 p-3 rounded-lg focus:outline-none focus:border-indigo-500 transition-colors h-24" placeholder="הייתי משנה את..."></textarea>
+        </div>
+
+        <button type="button" onClick={(e) => { e.preventDefault(); alert('התשובות נשמרו בהצלחה! כל הכבוד על המאמץ והחשיבה.'); }} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-colors text-lg">
+          שמירת הרפלקציה
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default ScientificInquiryApp;
